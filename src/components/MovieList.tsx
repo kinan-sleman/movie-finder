@@ -1,5 +1,5 @@
 import type { Movie } from '../types/movie'
-import { useFavorites } from '../contexts/FavoritesContext';
+import { useFavorites } from '../hooks/useFavorites';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faHeartCirclePlus } from '@fortawesome/free-solid-svg-icons';
 

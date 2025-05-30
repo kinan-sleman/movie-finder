@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useFavorites } from '../contexts/FavoritesContext';
 import MovieList from './MovieList';
 import SearchBox from './SearchBox';
 import EmptyState from './EmptyState';
+import { useFavorites } from '../hooks/useFavorites';
 
 export default function FavoritesPage() {
   const { favorites } = useFavorites();

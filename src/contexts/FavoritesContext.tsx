@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import type { Movie } from '../types/movie';
 
 interface FavoritesContextType {
@@ -8,8 +8,7 @@ interface FavoritesContextType {
   isFavorite: (movie: Movie) => boolean;
   toggleFavorite: (movie: Movie) => void;
 }
-
-const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
+export const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
 
 export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   // Load favorites from localStorage on mount
@@ -55,10 +54,4 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export const useFavorites = () => {
-  const context = useContext(FavoritesContext);
-  if (context === undefined) {
-    throw new Error('useFavorites must be used within a FavoritesProvider');
-  }
-  return context;
-};
+
