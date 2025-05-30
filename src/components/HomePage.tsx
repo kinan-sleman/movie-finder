@@ -20,7 +20,7 @@ export default function HomePage() {
     try {
       const response = await fetch(`http://www.omdbapi.com/?apikey=3b3a17f&s=${encodeURIComponent(searchTerm)}`);
       const data = await response.json();
-      
+
       if (data.Response === 'True') {
         setMovies(data.Search);
       } else {
@@ -35,19 +35,23 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    if (searchTerm) {
-      searchMovies(searchTerm);
-    } else {
-      // Fetch popular movies when no search term
-      searchMovies('popular');
-    }
+    const delayDebounce = setTimeout(() => {
+      if (searchTerm.trim()) {
+        searchMovies(searchTerm);
+      } else {
+        // Fetch popular movies when input is empty
+        searchMovies('popular');
+      }
+    }, 500); // ⏱ 500ms تأخير
+
+    return () => clearTimeout(delayDebounce);
   }, [searchTerm]);
 
   return (
     <div className="container-fluid movie-app bg-dark h-100" style={{ minHeight: "100vh" }}>
       <div className="row">
         <div className="col-md-12">
-          <SearchBox 
+          <SearchBox
             searchTerm={searchTerm}
             onSearch={setSearchTerm}
             placeholder="Search movies..."
@@ -59,18 +63,20 @@ export default function HomePage() {
             <p className="lead">Discover your favorite movies</p>
             <p>Start searching or explore our collection</p>
           </div>
-          
-          {favorites.length > 0 ? (
+
+          {favorites.length > 0 && (
             <div className="text-center mb-4">
               <p className="text-white">
-                You have {favorites.length} favorite movies
+                You have {favorites.length} favorite {favorites.length === 1 ? 'movie' : 'movies'}
               </p>
             </div>
-          ) : null}
+          )}
 
           <div className="row">
             <div className="col-12">
-              <h2 className="text-white mb-4">Popular Movies</h2>
+              <h2 className="text-white mb-4">
+                {searchTerm.trim() ? `Results for "${searchTerm}"` : 'Popular Movies'}
+              </h2>
               {loading ? (
                 <div className="text-center">
                   <div className="spinner-border text-danger" role="status">
