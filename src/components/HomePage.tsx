@@ -18,7 +18,7 @@ export default function HomePage() {
 
     setLoading(true);
     try {
-      const response = await fetch(`http://www.omdbapi.com/?apikey=3b3a17f&s=${encodeURIComponent(searchTerm)}`);
+      const response = await fetch(`https://www.omdbapi.com/?apikey=3b3a17f&s=${encodeURIComponent(searchTerm)}`);
       const data = await response.json();
 
       if (data.Response === 'True') {
